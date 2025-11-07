@@ -100,6 +100,8 @@ class TemplatesExtractionFlow(FlowSpec):
                     self.config.validated_reactions_path,
                     "--output_filename",
                     self.config.selected_reactions_path,
+                    "--engine",
+                    "embedded"
                 ]
             )
         self.next(self.template_extraction_setup)
