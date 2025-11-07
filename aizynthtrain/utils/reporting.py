@@ -32,6 +32,7 @@ def create_html_report_from_notebook(
         kernel_name=python_kernel,
         language="python",
         parameters=parameters,
+        engine_name="embedded"
     )
 
     with open(output_notebook, "r") as fileobj:
