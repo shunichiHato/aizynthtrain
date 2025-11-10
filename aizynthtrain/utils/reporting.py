@@ -50,7 +50,14 @@ def create_html_report_from_notebook(
     jupytext.write(notebook, input_notebook, fmt="ipynb")
 
     print(output_notebook)
-    execute_notebook(input_notebook, output_notebook, log_output=True, debug_later=True, parameters=parameters)
+    papermill.execute_notebook(
+        input_notebook,
+        output_notebook,
+        kernel_name=python_kernel,
+        language="python",
+        parameters=parameters,
+        engine_name="embedded"
+    )
 
     with open(output_notebook, "r") as fileobj:
         notebook_nb = nbformat.read(fileobj, as_version=4)
