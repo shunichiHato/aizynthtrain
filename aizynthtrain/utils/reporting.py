@@ -8,8 +8,8 @@ import nbformat
 import jupytext
 import papermill
 from ploomber_engine import execute_notebook
-
 from papermill.engines import NotebookExecutionManager
+import pdb
 
 _orig_notebook_complete = NotebookExecutionManager.notebook_complete
 
@@ -50,6 +50,7 @@ def create_html_report_from_notebook(
     notebook = jupytext.read(notebook_path, fmt="py:percent")
     jupytext.write(notebook, input_notebook, fmt="ipynb")
 
+    pdb.set_trace()
     execute_notebook(input_notebook, output_notebook, parameters=parameters)
 
     with open(output_notebook, "r") as fileobj:
