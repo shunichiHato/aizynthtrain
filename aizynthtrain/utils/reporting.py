@@ -49,7 +49,8 @@ def create_html_report_from_notebook(
     notebook = jupytext.read(notebook_path, fmt="py:percent")
     jupytext.write(notebook, input_notebook, fmt="ipynb")
 
-    execute_notebook(input_notebook, output_notebook, log_output=True, parameters=parameters)
+    print(output_notebook)
+    execute_notebook(input_notebook, output_notebook, log_output=True, debug_later=True, parameters=parameters)
 
     with open(output_notebook, "r") as fileobj:
         notebook_nb = nbformat.read(fileobj, as_version=4)
