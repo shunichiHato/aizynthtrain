@@ -244,6 +244,10 @@ print_(
 )
 
 # %%
+# check data["id"] is of type string
+if data["id"].dtype != 'object':
+    data["id"] = data["id"].astype(str)
+
 info = data["id"].str.extract(r"_P(?P<product_no>\d)$", expand=False)
 prod_val = info[~info.isna()].astype(int)
 sib_sel = np.zeros(len(data)).astype("bool")
