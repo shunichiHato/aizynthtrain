@@ -55,7 +55,8 @@ def create_html_report_from_notebook(
         output_notebook,
         kernel_name=python_kernel,
         language="python",
-        parameters=parameters
+        parameters=parameters,
+        engine="embedded" # Use ploomber's embedded engine to avoid issues with metadata
     )
 
     with open(output_notebook, "r") as fileobj:
