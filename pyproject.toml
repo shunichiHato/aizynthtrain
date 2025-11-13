@@ -1,18 +1,19 @@
 [tool.poetry]
 name = "aizynthtrain"
-version = "0.3.6"
+version = "0.3.7"
 description = "Tools to train reaction predictions models for AiZynthFinder"
 authors = ["Genheden, Samuel <samuel.genheden@astrazeneca.com>"]
 license = "Apache 2.0"
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.11"
+tensorflow= "^2.20.0"
 jupytext = "^1.3.3"
 papermill = "2.6.0"
 mendeleev = "^0.10.0"
 nbconvert = "^7.2.3"
 onnx = "^1.13.1"
-tf2onnx = "^1.13.0"
+tf2onnx = "^1.8.4"
 urllib3 = "<2.0"
 aizynthfinder = { version = "^4.0.0", extras = ["all", "tf"] }
 reaction-utils = "^1.3.0"
