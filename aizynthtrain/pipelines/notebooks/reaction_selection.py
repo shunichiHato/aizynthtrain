@@ -15,7 +15,7 @@ input_filename = ""
 output_filename = ""
 
 # %%
-data = pd.read_csv(input_filename, sep="\t")
+data = pd.read_csv(input_filename, sep="\t", dtype={"id": str})
 
 
 # %%
