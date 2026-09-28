@@ -4,7 +4,7 @@ from collections import defaultdict, Counter
 
 import numpy as np
 import pandas as pd
-from mendeleev import element as Element
+from rdkit import Chem
 from IPython.display import Markdown
 
 pd.options.display.float_format = "{:,.2f}".format
@@ -218,7 +218,7 @@ print_(
 elements = ", ".join(
     sorted(
         {
-            Element(int(key)).symbol
+            Chem.GetPeriodicTable().GetElementSymbol(int(key))
             for key, value in likelihoods.items()
             if key != "0" and value < LIKELIHOOD_LIMIT
         }
