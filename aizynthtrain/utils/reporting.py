@@ -7,6 +7,29 @@ import nbconvert
 import nbformat
 import jupytext
 import papermill
+from ploomber_engine import execute_notebook
+from papermill.engines import NotebookExecutionManager
+
+_orig_notebook_complete = NotebookExecutionManager.notebook_complete
+
+def _patched_notebook_complete(self, *args, **kwargs):
+    # Ensure every cell at least has a minimal papermill metadata block
+    for cell in self.nb.cells:
+        meta = getattr(cell, "metadata", None)
+        if meta is None:
+            continue
+        # nbformat NotebookNode behaves like an object and a dict
+        if not hasattr(meta, "papermill"):
+            # Mark as completed by default – embedded engine doesn’t track status anyway
+            meta["papermill"] = {
+                "status": self.COMPLETED,
+                "exception": None,
+            }
+
+    # Now call the original implementation, which will no longer crash
+    return _orig_notebook_complete(self, *args, **kwargs)
+
+NotebookExecutionManager.notebook_complete = _patched_notebook_complete
 
 
 def create_html_report_from_notebook(
@@ -26,12 +49,14 @@ def create_html_report_from_notebook(
     notebook = jupytext.read(notebook_path, fmt="py:percent")
     jupytext.write(notebook, input_notebook, fmt="ipynb")
 
+    print(output_notebook)
     papermill.execute_notebook(
         input_notebook,
         output_notebook,
         kernel_name=python_kernel,
         language="python",
         parameters=parameters,
+        engine_name="embedded" # Use ploomber's embedded engine to avoid issues with metadata
     )
 
     with open(output_notebook, "r") as fileobj:
